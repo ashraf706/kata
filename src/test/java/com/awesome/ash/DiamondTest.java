@@ -1,9 +1,13 @@
 package com.awesome.ash;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -35,26 +39,14 @@ class DiamondTest {
 
     @Test
     void should_return_0_blank_space_for_0() {
-        int result = Diamond.calculateBlankSpace(0);
+        int result = Diamond.calculateBlankSpaces(0);
         assertEquals(0, result);
     }
 
-    @Test
-    void should_return_1_blank_space_for_1() {
-        int result = Diamond.calculateBlankSpace(1);
-        assertEquals(1, result);
-    }
-
-    @Test
-    void should_return_3_blank_space_for_2() {
-        int result = Diamond.calculateBlankSpace(2);
-        assertEquals(3, result);
-    }
-
-    @Test
-    void should_return_5_blank_space_for_3() {
-        int result = Diamond.calculateBlankSpace(3);
-        assertEquals(5, result);
+    @ParameterizedTest
+    @MethodSource("lineNumberProvider")
+    void should_return_spaces_for_given_line_number(int lineNumber, int spaces) {
+        assertEquals(spaces, Diamond.calculateBlankSpaces(lineNumber));
     }
 
     @Test
@@ -155,5 +147,15 @@ class DiamondTest {
     void invalid_input_draw_nothing() {
         char[][] result = Diamond.draw('!');
         assertEquals(0, result.length);
+    }
+
+    private static Stream<Arguments> lineNumberProvider() {
+        return Stream.of(
+                Arguments.of(0, 0),
+                Arguments.of(1, 1),
+                Arguments.of(2, 3),
+                Arguments.of(3, 5),
+                Arguments.of(4, 7)
+        );
     }
 }

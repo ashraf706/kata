@@ -32,7 +32,7 @@ public class Diamond {
      * @param line line number
      * @return total number of blank space
      */
-    static int calculateBlankSpace(int line) {
+    static int calculateBlankSpaces(int line) {
         int space = 0;
         for (int i = 1; i <= line; i++) {
             space = i == 1 ? 1 : space + 2;
@@ -44,7 +44,7 @@ public class Diamond {
     private static char[][] createATwoDimensionArray(char alphabet) {
         int distance = alphabet - CHAR_A;
         int row = distance + MINIMUM;
-        int column = distance == 0 ? 1 : calculateBlankSpace(distance) + RESERVE_SPACE;
+        int column = distance == 0 ? 1 : calculateBlankSpaces(distance) + RESERVE_SPACE;
         return new char[row][column];
     }
 
@@ -72,6 +72,15 @@ public class Diamond {
         }
     }
 
+    /**
+     * Insert characters in the given two dimension arrays in reverse order.
+     * At the first iteration the given inputChar is entered in the first and last position of the array,
+     * rest of the position are filled with spaces.In the subsequent iterations the function decrease the
+     * inputChar value, increase starting position and decrease end position.
+     *
+     * @param inputChar a char range in between A to Z
+     * @param arr       two dimension char array to place the chars
+     */
     private static void insertChar(char inputChar, char[][] arr) {
         int charPosAtStart = 0;
         int charPosAtEnd = arr[0].length - 1;
